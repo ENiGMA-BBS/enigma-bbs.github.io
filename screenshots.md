@@ -6,12 +6,12 @@ permalink: /screenshots/
 
 Here are a selection of screenshots showing the default theme by Luciano Ayres of Blocktronics: 
 
-|--------------------------------------------------------------------------|----------------------|
-| <img src="/assets/images/screenshots/logon-matrix.png" width="600" />    | User Logon Matrix    |
-| <img src="/assets/images/screenshots/login-prompt.png" width="600" />    | User Logon Prompt    |
-| <img src="/assets/images/screenshots/nua.png" width="600" />             | New User Application |
-| <img src="/assets/images/screenshots/file-browser.png" width="600" />    | File Base Browser    |
-| <img src="/assets/images/screenshots/user-list.png" width="600" />       | User Lister          |
+|--------------------------------------------------------------------------|-------------------------------------------|
+| <img src="/assets/images/screenshots/logon-matrix.png" width="600" />    | User Logon Matrix                         |
+| <img src="/assets/images/screenshots/login-prompt.png" width="600" />    | User Logon Prompt                         |
+| <img src="/assets/images/screenshots/nua.png" width="600" />             | New User Application                      |
+| <img src="/assets/images/screenshots/file-browser.png" width="600" />    | File Base Browser (full ANSI support!)    |
+| <img src="/assets/images/screenshots/user-list.png" width="600" />       | User Lister                               |
 
 
 Here are some screenshots from heavily customised ENiGMA½ boards, showing what's possible:
