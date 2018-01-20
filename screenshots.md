@@ -18,9 +18,9 @@ Here are some screenshots from heavily customised ENiGMA½ boards, showing what'
 
 |--------------------------------------------------------------------------------|------------------------------------------|
 | <img src="/assets/images/screenshots/force9-login-matrix.png" width="600" />   | Login Matrix                             |
-| <img src="/assets/images/screenshots/xibalba-login-prompt.png" width="600" />  | Login Prompt                             |
+| <img src="/assets/images/screenshots/xibalba-login.png" width="600" />         | Login Prompt                             |
 | <img src="/assets/images/screenshots/system-stats.png" width="600" />          | System Stats                             |
-| <img src="/assets/images/screenshots/user-stats.png" width="600" />            | User Stats                             |
+| <img src="/assets/images/screenshots/xibalba-user-stats.png" width="600" />    | User Stats                             |
 | <img src="/assets/images/screenshots/xibalba-main-menu.png" width="600" />     | Main Menu                                |
 | <img src="/assets/images/screenshots/xibalba-message-list.png" width="600" />  | Message Lister                           |
 | <img src="/assets/images/screenshots/fse.png" width="600" />                   | Full Screen Message Editor               |
