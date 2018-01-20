@@ -32,6 +32,11 @@ GEM
       jekyll (~> 3.3)
     jekyll-sass-converter (1.5.1)
       sass (~> 3.4)
+    jekyll-seo-tag (2.4.0)
+      jekyll (~> 3.3)
+    jekyll-theme-hacker (0.1.0)
+      jekyll (~> 3.5)
+      jekyll-seo-tag (~> 2.0)
     jekyll-watch (2.0.0)
       listen (~> 3.0)
     kramdown (1.16.2)
@@ -63,6 +68,8 @@ DEPENDENCIES
   hacker
   jekyll (~> 3.7.0)
   jekyll-feed (~> 0.6)
+  jekyll-seo-tag
+  jekyll-theme-hacker
   tzinfo-data
 
 BUNDLED WITH
