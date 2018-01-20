@@ -20,7 +20,7 @@ Some key features;
   - Telnet, SSH, and both secure and non-secure [WebSocket](https://en.wikipedia.org/wiki/WebSocket) access built in.
   - MCI code support for lightbars, toggles, input areas etc.
 
-<center><iframe width="600" height="400" src="http://www.youtube.com/embed/6uyL5UHrjO4?modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe></center>
+<center><iframe width="600" height="400" src="https://www.youtube.com/embed/6uyL5UHrjO4?modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe></center>
 
 ## Recent News
 
