@@ -1,0 +1,488 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-g5ptsecz"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Access Condition System (ACS) | ENiGMA½ BBS</title><link rel="canonical" href="https://enigma-bbs.github.io/configuration/acs/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="icon" href="/favicon.ico" sizes="32x32"/><link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v7.3.2"/><meta name="generator" content="Starlight v0.42.0"/><meta property="og:title" content="Access Condition System (ACS)"/><meta property="og:type" content="article"/><meta property="og:url" content="https://enigma-bbs.github.io/configuration/acs/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Modern BBS software with a nostalgic flair, written in Node.js."/><meta property="og:site_name" content="ENiGMA½ BBS"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Modern BBS software with a nostalgic flair, written in Node.js."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/_astro/enigma.BRILFA6C.css"><link rel="stylesheet" href="/_astro/common.CDZPoAvc.css"><script type="module" src="/_astro/page.Dwipeu-R.js"></script></head><body class="astro-g5ptsecz"><a class="sl-skip-link astro-qb7clj6f" href="#_top">Skip to content</a><div class="page sl-flex astro-yntsjkba"><header class="header astro-yntsjkba"><div class="header astro-by6fddyj"><div class="title-wrapper sl-flex astro-by6fddyj"><a href="/" class="site-title sl-flex astro-6rvad3va"><span class="astro-6rvad3va" translate="no">ENiGMA½ BBS</span></a></div><div class="sl-flex print:hidden astro-by6fddyj"><site-search class="astro-by6fddyj astro-b5kgnn7o" data-translations="{&quot;placeholder&quot;:&quot;Search docs&quot;}"><button data-open-modal disabled aria-label="Search docs" aria-keyshortcuts="Control+K" class="astro-b5kgnn7o"><svg aria-hidden="true" class="astro-b5kgnn7o astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-b5kgnn7o" aria-hidden="true">Search docs</span><kbd class="sl-hidden md:sl-flex astro-b5kgnn7o" style="display: none;"><kbd class="astro-b5kgnn7o">Ctrl</kbd><kbd class="astro-b5kgnn7o">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search docs" class="astro-b5kgnn7o"><div class="dialog-frame sl-flex astro-b5kgnn7o"><button data-close-modal class="sl-flex md:sl-hidden astro-b5kgnn7o">Cancel</button><div class="search-container astro-b5kgnn7o"><div id="starlight__search" class="astro-b5kgnn7o"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.Bbh0UEtI.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-by6fddyj"><div class="sl-flex social-icons astro-by6fddyj"><a href="https://github.com/NuSkooler/enigma-bbs" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">GitHub</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://discord.gg/M2pbyvuGva" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">Discord</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 13.78 13.78 0 0 0-.64 1.28 18.27 18.27 0 0 0-5.5 0 12.64 12.64 0 0 0-.64-1.28h-.05A19.74 19.74 0 0 0 3.64 4.4 20.26 20.26 0 0 0 .11 18.09l.02.02a19.9 19.9 0 0 0 6.04 3.03l.04-.02a14.24 14.24 0 0 0 1.23-2.03.08.08 0 0 0-.05-.07 13.1 13.1 0 0 1-1.9-.92.08.08 0 0 1 .02-.1 10.2 10.2 0 0 0 .41-.31h.04a14.2 14.2 0 0 0 12.1 0l.04.01a9.63 9.63 0 0 0 .4.32.08.08 0 0 1-.03.1 12.29 12.29 0 0 1-1.9.91.08.08 0 0 0-.02.1 15.97 15.97 0 0 0 1.27 2.01h.04a19.84 19.84 0 0 0 6.03-3.05v-.03a20.12 20.12 0 0 0-3.57-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.22 0 2.18 1.1 2.16 2.42 0 1.34-.94 2.42-2.16 2.42Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-2z5xp7gb"><span class="sr-only astro-2z5xp7gb">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-2z5xp7gb"><option value="dark" class="astro-2z5xp7gb">Dark</option><option value="light" class="astro-2z5xp7gb">Light</option><option value="auto" selected class="astro-2z5xp7gb">Auto</option></select><svg aria-hidden="true" class="icon caret astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-yntsjkba" aria-label="Main"><button popovertarget="starlight__sidebar" class="sl-menu-button sl-flex md:sl-hidden print:hidden astro-r2osgdlg"><svg aria-hidden="true" class="open-menu astro-r2osgdlg astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-r2osgdlg astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg><span class="sr-only astro-r2osgdlg">Menu</span></button><script type="module">var e=class extends HTMLElement{constructor(){super(),matchMedia(`(min-width: 50em)`).addEventListener(`change`,()=>this.hidePopover()),this.addEventListener(`toggle`,({newState:e})=>this.trapFocus(e===`open`))}trapFocus(e){document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}};customElements.define(`sl-sidebar-pane`,e);</script><sl-sidebar-pane popover id="starlight__sidebar" class="sidebar-pane astro-yntsjkba"><div class="sidebar-content sl-flex astro-yntsjkba"><sl-sidebar-state-persist data-hash="1iw9mkr" class="astro-ipdry5cl"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-rmhv4bp6"><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Installation</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/installation/development/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Development Environment Setup</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/docker/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Docker</span></a></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">hardware</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/installation/hardware/rpi/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Raspberry Pi</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/hardware/windows/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Installation Under Windows</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><a href="/installation/install-script/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Install Script</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/installation-methods/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Installation Methods</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/manual/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Manual Installation</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/network/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Network Setup</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/production/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Production Installation</span></a></li><li class="astro-rmhv4bp6"><a href="/installation/testing/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Testing Your Installation</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Configuration</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/configuration/achievements/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Achievements</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/acs/" aria-current="page" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Access Condition System (ACS)</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/archivers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Archivers</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/colour-codes/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Colour Codes</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/config-files/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Configuration Files</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/config-hjson/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">System Configuration</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/creating-config/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Creating Initial Config Files</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/directory-structure/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Directory Structure</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/email/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Email</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/event-scheduler/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Event Scheduler</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/external-binaries/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">External Support Binaries</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/file-transfer-protocols/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">File Transfer Protocols</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/hjson/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">HJSON Config Files</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/menu-hjson/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Menu HSJON</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/security/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Security</span></a></li><li class="astro-rmhv4bp6"><a href="/configuration/sysop-setup/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">SysOp Setup</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">File Base</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/filebase/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">About File Areas</span></a></li><li class="astro-rmhv4bp6"><a href="/filebase/acs/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">ACS</span></a></li><li class="astro-rmhv4bp6"><a href="/filebase/first-file-area/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Configuring a File Base</span></a></li><li class="astro-rmhv4bp6"><a href="/filebase/network-mounts-and-symlinks/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Network Mounts &amp; Symlinks</span></a></li><li class="astro-rmhv4bp6"><a href="/filebase/tic-support/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">TIC Support</span></a></li><li class="astro-rmhv4bp6"><a href="/filebase/uploads/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Uploads</span></a></li><li class="astro-rmhv4bp6"><a href="/filebase/web-access/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Web Access</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Message Areas</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/messageareas/binkp/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">BinkP Native Mailer</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/bso-import-export/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">BSO Import / Export</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/configuring-a-message-area/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Message Base</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/ftn/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">FidoNet-Style Networks (FTN)</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/internet-mail/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Internet Mail (Email)</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/message-networks/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Message Networks</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/netmail/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Netmail</span></a></li><li class="astro-rmhv4bp6"><a href="/messageareas/qwk/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">QWK Support</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Art</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/art/general/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">General Art Information</span></a></li><li class="astro-rmhv4bp6"><a href="/art/mci/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">MCI Codes</span></a></li><li class="astro-rmhv4bp6"><a href="/art/pause-prompts/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Pause Prompts</span></a></li><li class="astro-rmhv4bp6"><a href="/art/themes/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Themes</span></a></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">views</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="6"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/art/views/button_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Button View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/edit_text_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Edit Text View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/full_menu_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Full Menu View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/horizontal_menu_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Horizontal Menu View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/mask_edit_text_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Mask Edit Text View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/multi_line_edit_text_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Multi Line Edit Text View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/spinner_menu_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Spinner Menu View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/status_bar_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Status Bar View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/text_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Text View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/ticker_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Ticker View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/toggle_menu_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Toggle Menu View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/vertical_menu_view/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Vertical Menu View</span></a></li><li class="astro-rmhv4bp6"><a href="/art/views/views/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Views</span></a></li></ul></details></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Servers</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="7"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">contentservers</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="8"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/servers/contentservers/activitypub-handler/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">ActivityPub Web Handler</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/contentservers/gopher/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Gopher Server</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/contentservers/nntp/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">NNTP Server</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/contentservers/rest-api/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">REST API</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/contentservers/web-handlers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Web Handlers</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/contentservers/web-server/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Web Server</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/contentservers/webfinger-handler/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">WebFinger Web Handler</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">loginservers</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="9"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/servers/loginservers/ssh/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">SSH Server</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/loginservers/telnet/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Telnet Server</span></a></li><li class="astro-rmhv4bp6"><a href="/servers/loginservers/websocket/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">WebSocket / Web Interface Server</span></a></li></ul></details></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Modding</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="10"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/modding/activitypub-msg-browser/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">ActivityPub Message Browser</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/activitypub-msg-viewer/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">ActivityPub Message Viewer</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/autosig-edit/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Auto Signature Editor</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/bbs-list/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">BBS List</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/configure-newscan/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Configure Newscan Module</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/door-servers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Door Servers</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/existing-mods/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Existing Mods</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/file-area-list/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">File Area List</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/file-base-download-manager/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">File Base Download Manager</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/file-base-web-download-manager/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">File Base Web Download Manager</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/file-transfer-protocol-select/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">File Transfer Protocol Select</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/last-callers/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Last Callers</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/local-doors/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Local Doors</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/local-doors-abracadabra/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Local Doors — Scripts &amp; Native Binaries</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/local-doors-dos-emulation/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Local Doors — External DOS Emulators</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/local-doors-v86/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Local Doors — Native v86 Emulation</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/local-doors-zmachine/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Local Doors — Z-Machine Interactive Fiction</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/menu-modules/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Menu Modules</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/msg-area-list/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Message Area List</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/msg-conf-list/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Message Conference List</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/node-msg/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Node to Node Messaging</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/onelinerz/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Onelinerz</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/pre-auth-feedback/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Pre-Auth Feedback</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/rumorz/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Rumorz</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/set-newscan-date/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Set Newscan Date Module</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/show-art/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">The Show Art Module</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/sysop-chat/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Sysop Chat</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/telnet-bridge/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Telnet Bridge</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/top-x/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">TopX</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/user-2fa-otp-config/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">2FA/OTP Config</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/user-list/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">User List</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/wfc/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Waiting For Caller (WFC)</span></a></li><li class="astro-rmhv4bp6"><a href="/modding/whos-online/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Who&#39;s Online</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Administration</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="11"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/admin/administration/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Administration</span></a></li><li class="astro-rmhv4bp6"><a href="/admin/oputil/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">oputil</span></a></li><li class="astro-rmhv4bp6"><a href="/admin/upgrading/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Upgrading</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Troubleshooting</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="12"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/troubleshooting/monitoring-logs/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Monitoring Logs</span></a></li><li class="astro-rmhv4bp6"><a href="/troubleshooting/ssh-troubleshooting/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Troubleshooting SSH</span></a></li><li class="astro-rmhv4bp6"><a href="/troubleshooting/websocket-troubleshooting/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">Troubleshooting WebSocket &amp; VTX</span></a></li></ul></details></li><li class="astro-rmhv4bp6"><details open class="astro-rmhv4bp6"><summary class="astro-rmhv4bp6"><span class="group-label astro-rmhv4bp6"><span class="large astro-rmhv4bp6">Miscellaneous</span></span><svg aria-hidden="true" class="caret astro-rmhv4bp6 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="13"></sl-sidebar-restore><ul class="astro-rmhv4bp6"><li class="astro-rmhv4bp6"><a href="/misc/user-interrupt/" class="astro-rmhv4bp6"><span class="astro-rmhv4bp6">User Interruptions</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-p4azlveh"><div class="social-icons astro-p4azlveh"><a href="https://github.com/NuSkooler/enigma-bbs" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">GitHub</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a><a href="https://discord.gg/M2pbyvuGva" rel="me" class="sl-flex astro-n2mnl6yq"><span class="sr-only astro-n2mnl6yq">Discord</span><svg aria-hidden="true" class="astro-n2mnl6yq astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 13.78 13.78 0 0 0-.64 1.28 18.27 18.27 0 0 0-5.5 0 12.64 12.64 0 0 0-.64-1.28h-.05A19.74 19.74 0 0 0 3.64 4.4 20.26 20.26 0 0 0 .11 18.09l.02.02a19.9 19.9 0 0 0 6.04 3.03l.04-.02a14.24 14.24 0 0 0 1.23-2.03.08.08 0 0 0-.05-.07 13.1 13.1 0 0 1-1.9-.92.08.08 0 0 1 .02-.1 10.2 10.2 0 0 0 .41-.31h.04a14.2 14.2 0 0 0 12.1 0l.04.01a9.63 9.63 0 0 0 .4.32.08.08 0 0 1-.03.1 12.29 12.29 0 0 1-1.9.91.08.08 0 0 0-.02.1 15.97 15.97 0 0 0 1.27 2.01h.04a19.84 19.84 0 0 0 6.03-3.05v-.03a20.12 20.12 0 0 0-3.57-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.22 0 2.18 1.1 2.16 2.42 0 1.34-.94 2.42-2.16 2.42Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-2z5xp7gb"><span class="sr-only astro-2z5xp7gb">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-2z5xp7gb"><option value="dark" class="astro-2z5xp7gb">Dark</option><option value="light" class="astro-2z5xp7gb">Light</option><option value="auto" selected class="astro-2z5xp7gb">Auto</option></select><svg aria-hidden="true" class="icon caret astro-2z5xp7gb astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script></div></div></div></sl-sidebar-pane></nav><div class="main-frame astro-yntsjkba"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-lrzkfocr"><aside class="right-sidebar-container print:hidden astro-lrzkfocr"><div class="right-sidebar astro-lrzkfocr"><div class="lg:sl-hidden astro-qok35upx"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-66cqc7ze"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-66cqc7ze"><details id="starlight__mobile-toc" class="astro-66cqc7ze"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-66cqc7ze"><span class="toggle sl-flex astro-66cqc7ze">On this page<svg aria-hidden="true" class="caret astro-66cqc7ze astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-66cqc7ze"></span></summary><div class="dropdown astro-66cqc7ze"><ul class="isMobile astro-jugkfwgx" style="--depth: 0;"><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#_top" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Overview</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#access-condition-system-acs" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Access Condition System (ACS)</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#group-membership" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Group Membership</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-grammar" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Grammar</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#operators" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Operators</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#operator-precedence" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Operator Precedence</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#arguments" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Arguments</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#examples" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Examples</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-codes" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Codes</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#user--authentication" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">User &amp; Authentication</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#activity--statistics" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Activity &amp; Statistics</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#achievements" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Achievements</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#connection--terminal" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Connection &amp; Terminal</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#time--date" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Time &amp; Date</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#services--features" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Services &amp; Features</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-blocks" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Blocks</span></a><ul class="isMobile astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#defaults" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Defaults</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-touch-points" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Touch Points</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#conditional-values" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Conditional Values</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#see-also" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">See Also</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-qok35upx"><div class="sl-container astro-qok35upx"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-jugkfwgx" style="--depth: 0;"><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#_top" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Overview</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#access-condition-system-acs" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Access Condition System (ACS)</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#group-membership" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Group Membership</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-grammar" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Grammar</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#operators" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Operators</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#operator-precedence" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Operator Precedence</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#arguments" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Arguments</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#examples" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Examples</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-codes" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Codes</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#user--authentication" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">User &amp; Authentication</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#activity--statistics" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Activity &amp; Statistics</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#achievements" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Achievements</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#connection--terminal" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Connection &amp; Terminal</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#time--date" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Time &amp; Date</span></a></li><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#services--features" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Services &amp; Features</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-blocks" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Blocks</span></a><ul class="astro-jugkfwgx" style="--depth: 1;"><li style="--depth: 1;" class="astro-jugkfwgx"><a href="#defaults" style="--depth: 1;" class="astro-jugkfwgx"><span style="--depth: 1;" class="astro-jugkfwgx">Defaults</span></a></li></ul></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#acs-touch-points" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">ACS Touch Points</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#conditional-values" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">Conditional Values</span></a></li><li style="--depth: 0;" class="astro-jugkfwgx"><a href="#see-also" style="--depth: 0;" class="astro-jugkfwgx"><span style="--depth: 0;" class="astro-jugkfwgx">See Also</span></a></li></ul></nav></starlight-toc><script type="module" src="/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-lrzkfocr"><main data-pagefind-body class="astro-g5ptsecz" lang="en" dir="ltr"><div class="content-panel astro-a7po4psb"><div class="sl-container astro-a7po4psb"><h1 id="_top" class="astro-bebwqqxs">Access Condition System (ACS)</h1></div></div><div class="content-panel astro-a7po4psb"><div class="sl-container astro-a7po4psb"><div class="sl-markdown-content"><div class="sl-heading-wrapper level-h2"><h2 id="access-condition-system-acs">Access Condition System (ACS)</h2><a class="sl-anchor-link" href="#access-condition-system-acs"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Access Condition System (ACS)”</span></a></div>
+<p>ENiGMA½ uses an Access Condition System (ACS) that is both familiar to oldschool BBS operators and has its own style. With ACS, SysOps are able to control access to various areas of the system based on conditions such as group membership, connection type, terminal capabilities, and more. Various touch points in the system are configured to allow for <code dir="auto">acs</code> checks. In some cases ACS is a simple boolean check while others (via ACS blocks) allow defining what conditions must be true for certain <em>rights</em> such as <code dir="auto">read</code> and <code dir="auto">write</code> (though others exist as well).</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="group-membership">Group Membership</h2><a class="sl-anchor-link" href="#group-membership"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Group Membership”</span></a></div>
+<p>ENiGMA½ does not utilize legacy “security levels” (see note below) but instead uses a group system. Users may belong to one or more groups which can be checked by the <code dir="auto">GM</code> ACS code (see <a href="#acs-codes">ACS Codes</a> below). Two special groups exist out of the box:</p>
+<ol>
+<li><code dir="auto">users</code>: Any regular user.</li>
+<li><code dir="auto">sysops</code>: System Operators. The first user (your root/admin) will always belong to this group.</li>
+</ol>
+<p>You do not need to explicitly create groups: by checking for them via ACS and adding members to a group, they implicitly exist within the system. You may use as many groups as you like. See <a href="/admin/oputil/#user"><code dir="auto">oputil user group</code></a> for adding and removing users to groups.</p>
+<aside aria-label="Note" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"></path></svg>Note</p><div class="starlight-aside__content"><p>Many drop file formats require a security level. As such, the following apply: root user or users in <code dir="auto">sysops</code> group receive a security level of <code dir="auto">100</code> while standard <code dir="auto">users</code> receive <code dir="auto">30</code>.</p></div></aside>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="acs-grammar">ACS Grammar</h2><a class="sl-anchor-link" href="#acs-grammar"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “ACS Grammar”</span></a></div>
+<p>ACS strings are one or more ACS codes combined with logical operators. Whitespace (spaces) between operators, codes, and parentheses is optional — you can write compact strings like <code dir="auto">GM[users]|NC5</code> or readable ones like <code dir="auto">GM[users] | NC5</code>.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="operators">Operators</h3><a class="sl-anchor-link" href="#operators"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Operators”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">Operator</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td align="center"><code dir="auto">&#x26;</code></td><td>AND</td><td>Both sides must be true. <strong>This is also the default</strong> — two adjacent codes with no operator are implicitly AND’d.</td></tr><tr><td align="center"><code dir="auto">|</code></td><td>OR</td><td>Either side must be true.</td></tr><tr><td align="center"><code dir="auto">!</code></td><td>NOT</td><td>Negates the following check.</td></tr><tr><td align="center"><code dir="auto">(</code> <code dir="auto">)</code></td><td>Grouping</td><td>Control evaluation order.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="operator-precedence">Operator Precedence</h3><a class="sl-anchor-link" href="#operator-precedence"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Operator Precedence”</span></a></div>
+<p>From highest to lowest:</p>
+<ol>
+<li><code dir="auto">!</code> (NOT) — binds tightest, applies to the immediately following code or group</li>
+<li>Implicit AND / <code dir="auto">&#x26;</code> — adjacent codes or explicit <code dir="auto">&#x26;</code></li>
+<li><code dir="auto">|</code> (OR) — loosest binding</li>
+</ol>
+<p>Parentheses override precedence: <code dir="auto">(A | B) &#x26; C</code> requires either A or B to be true, AND C to be true.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="arguments">Arguments</h3><a class="sl-anchor-link" href="#arguments"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Arguments”</span></a></div>
+<p>ACS codes take an optional argument immediately after the two-letter code:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Form</th><th>Description</th><th>Examples</th></tr></thead><tbody><tr><td><em>number</em></td><td>A single integer value</td><td><code dir="auto">NC5</code>, <code dir="auto">TH24</code>, <code dir="auto">AA30</code></td></tr><tr><td><code dir="auto">[</code><em>values</em><code dir="auto">]</code></td><td>A comma-separated list of values in brackets</td><td><code dir="auto">GM[users,sysops]</code>, <code dir="auto">ID[1,42]</code>, <code dir="auto">WD[0,6]</code></td></tr><tr><td><em>(none)</em></td><td>Some codes take no argument</td><td><code dir="auto">SC</code>, <code dir="auto">LC</code></td></tr></tbody></table>
+<p>Spaces are allowed around commas inside lists: <code dir="auto">GM[users, sysops]</code> is valid.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="examples">Examples</h3><a class="sl-anchor-link" href="#examples"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Examples”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>ACS String</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">GM[users]</code></td><td>User belongs to the <code dir="auto">users</code> group</td></tr><tr><td><code dir="auto">NC2</code></td><td>User has called at least 2 times</td></tr><tr><td><code dir="auto">ID1</code></td><td>User is ID 1 (the SysOp)</td></tr><tr><td><code dir="auto">GM[elite,power]</code></td><td>User belongs to <code dir="auto">elite</code> or <code dir="auto">power</code> group</td></tr><tr><td><code dir="auto">ID1 | GM[co-op]</code></td><td>User is the SysOp OR belongs to <code dir="auto">co-op</code></td></tr><tr><td><code dir="auto">!TH24</code></td><td>Terminal height is NOT exactly 24 (i.e., 24 fails; 25+ passes since <code dir="auto">TH</code> checks <code dir="auto">>=</code>)</td></tr><tr><td><code dir="auto">GM[users] &#x26; SC</code></td><td>User is in <code dir="auto">users</code> group AND connection is secure</td></tr><tr><td><code dir="auto">GM[users] NC5</code></td><td>Same as above but with implicit AND — user is in group AND has 5+ calls</td></tr><tr><td><code dir="auto">(GM[sysops] | ID1) &#x26; SC</code></td><td>SysOp or ID 1, AND secure connection required</td></tr><tr><td><code dir="auto">!GM[banned]</code></td><td>User is NOT in the <code dir="auto">banned</code> group</td></tr><tr><td><code dir="auto">GM[users] &#x26; !GM[restricted]</code></td><td>In <code dir="auto">users</code> but not in <code dir="auto">restricted</code></td></tr></tbody></table>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="acs-codes">ACS Codes</h2><a class="sl-anchor-link" href="#acs-codes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “ACS Codes”</span></a></div>
+<p>The following ACS codes are available:</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="user--authentication">User &#x26; Authentication</h3><a class="sl-anchor-link" href="#user--authentication"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “User &#x26; Authentication”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Condition</th></tr></thead><tbody><tr><td><code dir="auto">ID</code><em>n</em>, <code dir="auto">ID[</code><em>n,…</em><code dir="auto">]</code></td><td>User’s ID is <em>n</em> or one of [<em>n,…</em>]</td></tr><tr><td><code dir="auto">GM[</code><em>group,…</em><code dir="auto">]</code></td><td>User belongs to one of [<em>group,…</em>]</td></tr><tr><td><code dir="auto">AG</code><em>age</em></td><td>User’s age is >= <em>age</em> years</td></tr><tr><td><code dir="auto">AS</code><em>status</em>, <code dir="auto">AS[</code><em>status,…</em><code dir="auto">]</code></td><td>User’s account status is <em>status</em> or one of [<em>status,…</em>]. <code dir="auto">0</code>=inactive, <code dir="auto">1</code>=active.</td></tr><tr><td><code dir="auto">AF</code><em>factor</em></td><td>User’s current authentication factor is >= <em>factor</em>. Factor 1 = password/pubkey, factor 2 = 2FA (OTP).</td></tr><tr><td><code dir="auto">AR</code><em>factor</em></td><td>User <strong>requires</strong> authentication factor >= <em>factor</em>. <code dir="auto">1</code>=always true, <code dir="auto">2</code>=true only if user has 2FA configured.</td></tr><tr><td><code dir="auto">PV[</code><em>name</em><code dir="auto">,</code><em>value</em><code dir="auto">]</code></td><td>User property <em>name</em> is exactly <em>value</em>. Allows arbitrary property checks, e.g. <code dir="auto">PV[message_conf,local]</code>.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="activity--statistics">Activity &#x26; Statistics</h3><a class="sl-anchor-link" href="#activity--statistics"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Activity &#x26; Statistics”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Condition</th></tr></thead><tbody><tr><td><code dir="auto">NC</code><em>calls</em></td><td>User’s login/call count is >= <em>calls</em></td></tr><tr><td><code dir="auto">NP</code><em>posts</em></td><td>User’s message post count is >= <em>posts</em></td></tr><tr><td><code dir="auto">AA</code><em>days</em></td><td>User’s account is >= <em>days</em> old</td></tr><tr><td><code dir="auto">UP</code><em>count</em></td><td>User’s upload file count is >= <em>count</em></td></tr><tr><td><code dir="auto">DL</code><em>count</em></td><td>User’s download file count is >= <em>count</em></td></tr><tr><td><code dir="auto">BU</code><em>bytes</em></td><td>User’s total uploaded bytes is >= <em>bytes</em></td></tr><tr><td><code dir="auto">BD</code><em>bytes</em></td><td>User’s total downloaded bytes is >= <em>bytes</em></td></tr><tr><td><code dir="auto">NR</code><em>ratio</em></td><td>User’s upload/download count ratio is >= <em>ratio</em>%</td></tr><tr><td><code dir="auto">KR</code><em>ratio</em></td><td>User’s upload/download byte ratio is >= <em>ratio</em>%</td></tr><tr><td><code dir="auto">PC</code><em>ratio</em></td><td>User’s post/call ratio is >= <em>ratio</em>%</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="achievements">Achievements</h3><a class="sl-anchor-link" href="#achievements"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Achievements”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Condition</th></tr></thead><tbody><tr><td><code dir="auto">AC</code><em>count</em></td><td>User’s total achievement count is >= <em>count</em></td></tr><tr><td><code dir="auto">AP</code><em>points</em></td><td>User’s total achievement points is >= <em>points</em></td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="connection--terminal">Connection &#x26; Terminal</h3><a class="sl-anchor-link" href="#connection--terminal"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Connection &#x26; Terminal”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Condition</th></tr></thead><tbody><tr><td><code dir="auto">LC</code></td><td>Connection is local</td></tr><tr><td><code dir="auto">SC</code></td><td>Connection is secure (SSL/TLS, secure WebSocket, etc.)</td></tr><tr><td><code dir="auto">EC</code><em>encoding</em></td><td>Terminal encoding: <code dir="auto">0</code> = CP437, <code dir="auto">1</code> = UTF-8</td></tr><tr><td><code dir="auto">TH</code><em>height</em></td><td>Terminal height is >= <em>height</em></td></tr><tr><td><code dir="auto">TW</code><em>width</em></td><td>Terminal width is >= <em>width</em></td></tr><tr><td><code dir="auto">TT[</code><em>type,…</em><code dir="auto">]</code></td><td>Terminal type is one of [<em>type,…</em>] (<code dir="auto">ansi</code>, <code dir="auto">xterm</code>, etc.)</td></tr><tr><td><code dir="auto">TM[</code><em>theme,…</em><code dir="auto">]</code></td><td>User’s current theme ID is one of [<em>theme,…</em>] (e.g. <code dir="auto">luciano_blocktronics</code>)</td></tr><tr><td><code dir="auto">NN</code><em>node</em>, <code dir="auto">NN[</code><em>node,…</em><code dir="auto">]</code></td><td>Current node number is <em>node</em> or one of [<em>node,…</em>]</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="time--date">Time &#x26; Date</h3><a class="sl-anchor-link" href="#time--date"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Time &#x26; Date”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Condition</th></tr></thead><tbody><tr><td><code dir="auto">WD</code><em>day</em>, <code dir="auto">WD[</code><em>day,…</em><code dir="auto">]</code></td><td>Day of week is <em>day</em> or one of [<em>day,…</em>]. <code dir="auto">0</code>=Sunday, <code dir="auto">1</code>=Monday, …, <code dir="auto">6</code>=Saturday.</td></tr><tr><td><code dir="auto">MM</code><em>minutes</em></td><td>Current time is >= <em>minutes</em> past midnight (system time)</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="services--features">Services &#x26; Features</h3><a class="sl-anchor-link" href="#services--features"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Services &#x26; Features”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Condition</th></tr></thead><tbody><tr><td><code dir="auto">SE[</code><em>service,…</em><code dir="auto">]</code></td><td>All listed services are enabled. Service names are <strong>case-insensitive</strong>. Available: <code dir="auto">http</code>, <code dir="auto">https</code>, <code dir="auto">web</code> (either http or https), <code dir="auto">gopher</code>, <code dir="auto">nntp</code>, <code dir="auto">nntps</code>, <code dir="auto">activitypub</code> (requires web), <code dir="auto">nodeinfo2</code> (requires web), <code dir="auto">webfinger</code> (requires web). Unknown service names always fail.</td></tr><tr><td><code dir="auto">AE</code><em>enabled</em></td><td>ActivityPub is enabled for the current user: <code dir="auto">1</code>=yes, <code dir="auto">0</code>=no</td></tr></tbody></table>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="acs-blocks">ACS Blocks</h2><a class="sl-anchor-link" href="#acs-blocks"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “ACS Blocks”</span></a></div>
+<p>Some areas of the system require more than a single ACS string. In these situations an <em>ACS block</em> is used to allow finer-grained control. Each key in the block names a right (<code dir="auto">read</code>, <code dir="auto">write</code>, <code dir="auto">download</code>, etc.) and maps to an ACS string.</p>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.w36nc.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="hjson"><code><div class="ec-line"><div class="code"><span style="--0:#80CBC4;--1:#096E72">acs</span><span style="--0:#D6DEEB;--1:#403F53">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#80CBC4;--1:#096E72">read</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">GM[users]</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#80CBC4;--1:#096E72">write</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">GM[sysops,co-ops]</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#80CBC4;--1:#096E72">download</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">GM[elite] | UP10</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="acs: {    read: GM[users]    write: GM[sysops,co-ops]    download: GM[elite] | UP10}"><div></div></button></div></figure></div>
+<p>All <code dir="auto">users</code> can read (see) the area, <code dir="auto">sysops</code> and <code dir="auto">co-ops</code> can write (upload), and only members of <code dir="auto">elite</code> or those with 10+ uploads can download.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="defaults">Defaults</h3><a class="sl-anchor-link" href="#defaults"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Defaults”</span></a></div>
+<p>When an ACS block is not specified (or a particular scope is missing), the system applies sensible defaults:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Context</th><th>Scope</th><th>Default</th></tr></thead><tbody><tr><td>Message Conference</td><td><code dir="auto">read</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>Message Conference</td><td><code dir="auto">write</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>Message Area</td><td><code dir="auto">read</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>Message Area</td><td><code dir="auto">write</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>File Area</td><td><code dir="auto">read</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>File Area</td><td><code dir="auto">write</code></td><td><code dir="auto">GM[sysops]</code></td></tr><tr><td>File Area</td><td><code dir="auto">download</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>FSE Body Upload</td><td><code dir="auto">uploadAcs</code></td><td><code dir="auto">GM[users]</code></td></tr><tr><td>Menu Module</td><td><code dir="auto">acs</code></td><td><em>(no check — all users can access)</em></td></tr></tbody></table>
+<aside aria-label="Note" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"></path></svg>Note</p><div class="starlight-aside__content"><p>The FSE (Full Screen Editor) uses a scope called <code dir="auto">uploadAcs</code> (not <code dir="auto">upload</code>) for controlling who can upload a file into a message body. This is distinct from the file area <code dir="auto">write</code> scope which controls file base uploads. The <code dir="auto">uploadAcs</code> scope is checked on the FSE’s menu config to decide whether the “Upload” option appears in the editor menu. If you want to restrict message body file uploads, set <code dir="auto">uploadAcs</code> in your FSE menu entry’s config block:</p><div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="hjson"><code><div class="ec-line"><div class="code"><span style="--0:#80CBC4;--1:#096E72">config</span><span style="--0:#D6DEEB;--1:#403F53">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#80CBC4;--1:#096E72">uploadAcs</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">GM[sysops]  // only sysops can upload files into messages</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="config: {    uploadAcs: GM[sysops]  // only sysops can upload files into messages}"><div></div></button></div></figure></div></div></aside>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="acs-touch-points">ACS Touch Points</h2><a class="sl-anchor-link" href="#acs-touch-points"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “ACS Touch Points”</span></a></div>
+<p>The following areas of the system support ACS checks:</p>
+<ul>
+<li><a href="/messageareas/configuring-a-message-area/">Message conferences and areas</a></li>
+<li><a href="/filebase/first-file-area/">File base areas</a> and <a href="/filebase/uploads/">Uploads</a></li>
+<li>Menus within <a href="/configuration/menu-hjson/">Menu HJSON (menu.hjson)</a> — use <code dir="auto">acs</code> in a menu’s <code dir="auto">config</code> block to restrict access</li>
+<li>Conditional <code dir="auto">next</code> / <code dir="auto">action</code> arrays in menu configuration — each entry can include an <code dir="auto">acs</code> field to control which branch is taken</li>
+</ul>
+<p>See the specific area documentation for details on available scopes and defaults.</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="conditional-values">Conditional Values</h2><a class="sl-anchor-link" href="#conditional-values"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Conditional Values”</span></a></div>
+<p>Some configuration fields (such as <code dir="auto">next</code> in menus) support conditional arrays where each element may include an <code dir="auto">acs</code> check. The first matching condition is used:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="hjson"><code><div class="ec-line"><div class="code"><span style="--0:#80CBC4;--1:#096E72">next</span><span style="--0:#D6DEEB;--1:#403F53">: [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#80CBC4;--1:#096E72">acs</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">GM[sysops]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#80CBC4;--1:#096E72">next</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">sysopMainMenu</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#80CBC4;--1:#096E72">acs</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">GM[users]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#80CBC4;--1:#096E72">next</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">userMainMenu</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#919F9F;--1:#5D6376">        </span></span><span style="--0:#919F9F;--1:#5D6376">// No acs — fallback for everyone else</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#80CBC4;--1:#096E72">next</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#ECC48D;--1:#984E4D">guestMenu</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="next: [    {        acs: GM[sysops]        next: sysopMainMenu    }    {        acs: GM[users]        next: userMainMenu    }    {        // No acs — fallback for everyone else        next: guestMenu    }]"><div></div></button></div></figure></div>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="see-also">See Also</h2><a class="sl-anchor-link" href="#see-also"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “See Also”</span></a></div>
+<ul>
+<li><a href="/filebase/acs/">File Base ACS</a></li>
+<li><a href="/messageareas/configuring-a-message-area/">Configuring Message Areas</a></li>
+<li><a href="/configuration/menu-hjson/">Menu HJSON</a></li>
+</ul></div><footer class="sl-flex astro-ddtxxk7k"><div class="meta sl-flex astro-ddtxxk7k"><a href="https://github.com/NuSkooler/enigma-bbs/edit/master/website/src/content/docs/configuration/acs.md" class="sl-flex print:hidden astro-qlekgd3o"><svg aria-hidden="true" class="astro-qlekgd3o astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.2em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg>Edit page</a><p>Last updated: <time datetime="2026-09-09T21:25:17.000Z">Sep 9, 2026</time></p></div><div class="pagination-links print:hidden astro-b5raizh3" dir="ltr"><a href="/configuration/achievements/" rel="prev" class="astro-b5raizh3"><svg aria-hidden="true" class="astro-b5raizh3 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-b5raizh3">Previous<br class="astro-b5raizh3"><span class="link-title astro-b5raizh3">Achievements</span></span></a><a href="/configuration/archivers/" rel="next" class="astro-b5raizh3"><svg aria-hidden="true" class="astro-b5raizh3 astro-hkc32dio" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-b5raizh3">Next<br class="astro-b5raizh3"><span class="link-title astro-b5raizh3">Archivers</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
