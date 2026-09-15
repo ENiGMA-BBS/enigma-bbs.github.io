@@ -709,7 +709,7 @@
 <li><code dir="auto">oputil.js user rename USERNAME NEWNAME</code></li>
 <li><code dir="auto">my_messages.js</code> module (defaulted to “m” at the message menu) to list public messages addressed to the currently logged in user. Takes into account their username and <code dir="auto">real_name</code> property.</li>
 <li>SSH Public Key Authentication has been added. The system uses a OpenSSH style public key set on the <code dir="auto">ssh_public_key</code> user property.</li>
-<li>2-Factor (2FA) authentication is now available using <a href="https://tools.ietf.org/html/rfc4226">RFC-4266 - HOTP: HMAC-Based One-Time Password Algorithm)</a>, <a href="https://tools.ietf.org/html/rfc6238">RFC-6238 - TOTP: Time-Based One-Time Password Algorithm</a>, or <a href="http://google-authenticator.com/">Google Authenticator</a>. QR codes for activation are available as well. One-time backup aka recovery codes can also be used. See <a href="/configuration/security/">Security</a> for more info!</li>
+<li>2-Factor (2FA) authentication is now available using <a href="https://tools.ietf.org/html/rfc4226">RFC-4266 - HOTP: HMAC-Based One-Time Password Algorithm)</a>, <a href="https://tools.ietf.org/html/rfc6238">RFC-6238 - TOTP: Time-Based One-Time Password Algorithm</a>, or <a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>. QR codes for activation are available as well. One-time backup aka recovery codes can also be used. See <a href="/configuration/security/">Security</a> for more info!</li>
 </ul>
 <ul>
 <li>New ACS codes for new 2FA/OTP: <code dir="auto">AR</code> and <code dir="auto">AF</code>. See <a href="/configuration/acs/">ACS</a> for details.</li>
@@ -777,7 +777,7 @@
 <li>New menu stack flags: <code dir="auto">noHistory</code> now works as expected, and a new addition of <code dir="auto">popParent</code>. See the default <code dir="auto">menu.hjson</code> for usage.</li>
 <li>File structure changes making ENiGMA½ much easier to maintain and run in Docker. Thanks to RiPuk (<a href="https://github.com/davestephens">Dave Stephens</a>)! See <a href="/admin/upgrade-notes/">UPGRADE.md</a> for details.</li>
 <li>Switch to pure JS <a href="https://github.com/mscdex/node-xxhash">xxhash</a> instead of farmhash. Too many issues on ARM and other less popular CPUs with farmhash (<a href="https://github.com/davestephens">Dave Stephens</a>)</li>
-<li>Native <a href="http://combatnet.us/">CombatNet</a> support! (<a href="https://github.com/davestephens">Dave Stephens</a>)</li>
+<li>Native CombatNet support! (<a href="https://github.com/davestephens">Dave Stephens</a>)</li>
 <li>Fix various issues with legacy DOS Telnet terminals. Note that some may still have issues with extensive CPR usage by ENiGMA½ that will be addressed in a future release.</li>
 <li>Added web (http://, https://) based download manager including batch downloads. Clickable links if using <a href="https://github.com/codewar65/VTX_ClientServer">VTXClient</a>!</li>
 <li>General VTX hyperlink support for web links</li>
