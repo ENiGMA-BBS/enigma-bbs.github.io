@@ -75,6 +75,9 @@
 <div class="sl-heading-wrapper level-h2"><h2 id="051-beta">0.5.1-beta</h2><a class="sl-anchor-link" href="#051-beta"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “0.5.1-beta”</span></a></div>
 <ul>
 <li>
+<p><strong>Exodus has shut down; the module (<code dir="auto">exodus.js</code>) has been removed</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/857">#857</a>). Both ports the module needs refuse connections and every documented URL is gone, so there was nothing left to point it at. See <a href="/admin/upgrade-notes/">UPGRADE</a> if your <code dir="auto">menu.hjson</code> still carries an Exodus menu.</p>
+</li>
+<li>
 <p><strong>Daily time limits</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/795">#795</a>) — ENiGMA½ can now meter how long a user spends on the board each day and cut them off when their allowance runs out.</p>
 <p><strong>Nothing is metered until you say so.</strong> No allowance ships configured, every user is unlimited, and upgrading an existing board changes nothing. Time used today is tracked regardless, so <code dir="auto">oputil.js user info</code> and the new <code dir="auto">TD</code> MCI code tell the truth even where nothing is enforced — it is the “time on today” figure ENiGMA½ has never had.</p>
 <p>An allowance is a <code dir="auto">users.timeLimits</code> band: an ordered list where the first entry whose <code dir="auto">acs</code> matches wins, and an entry with no <code dir="auto">acs</code> at all is the default. A per-account override beats every band, set with <code dir="auto">oputil.js user time USERNAME &#x3C;minutes|clear></code>.</p>
@@ -129,6 +132,72 @@
 <p>A machine-readable <strong><a href="https://json-schema.org/">JSON Schema</a> for <code dir="auto">config.hjson</code> is now published</strong> at <code dir="auto">misc/config.schema.json</code>, generated from the same source the validator uses by <code dir="auto">npm run build:schema</code>. It is there for the configuration editor asked for in <a href="https://github.com/NuSkooler/enigma-bbs/issues/133">#133</a> and for anything else that wants to know what a setting is called, what type it takes and what it defaults to, without reading <code dir="auto">config_default.js</code>. A test fails if it is ever out of date. Note it describes the configuration <em>after</em> <code dir="auto">@reference:</code>, <code dir="auto">@environment:</code> and <code dir="auto">@file:</code> specs are resolved, and that HJSON editors do not consume JSON Schema — this is not editor tooling.</p>
 <p>Writing it turned up a false positive in the validator itself: <strong>an archiver or file transfer protocol of your own could be told a legitimate key was a typo.</strong> The shapes of those blocks are inferred from the examples ENiGMA½ ships, and only the outermost level of an inferred shape was left open. So <code dir="auto">entryGroupOrder</code> — which the shipped <code dir="auto">Arj</code> archiver uses, but the first archiver in the list does not — was reported as an unknown key inside anyone else’s <code dir="auto">list{}</code>, as was <code dir="auto">processIACs</code> inside a custom protocol’s <code dir="auto">external{}</code>. Inferred shapes are now open at every level.</p>
 <p>The same problems are now also reported <strong>at startup and when you edit a running board</strong> — on the console at startup, since the log is not open yet, and to the log on a hot reload. Neither ever stops anything: a configuration with problems is still applied, exactly as before. Set <code dir="auto">general.configValidation</code> to <code dir="auto">off</code> to stay silent; <code dir="auto">oputil.js config validate</code> keeps working either way. There is deliberately no strict mode.</p>
+</li>
+<li>
+<p><strong>Notifications reach an +op at the WFC without wrecking the dashboard</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/438">#438</a>, <a href="https://github.com/NuSkooler/enigma-bbs/issues/217">#217</a>) — an +op sitting at the waiting-for-caller screen is a node like any other, so achievements, node messages and time warnings were all aimed at their terminal. The WFC queues rather than displays, so nothing appeared at the time; the items were then flushed on the way <em>out</em>, painting over whatever menu the op had moved to. A dashboard that gets painted over is not a dashboard, so nothing is drawn on top of it any more — each notification is <strong>routed</strong> instead.</p>
+<p>Every interrupt item now carries a <code dir="auto">type</code> (<code dir="auto">nodeMsg</code>, <code dir="auto">achievement</code>, <code dir="auto">achievementGlobal</code>, <code dir="auto">sysopPage</code>, <code dir="auto">timeWarning</code>, <code dir="auto">system</code>) and, where a person is involved, a <code dir="auto">from</code> naming them. Each type is routed to zero or more <em>sinks</em>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Default sinks</th><th>Why</th></tr></thead><tbody><tr><td><code dir="auto">nodeMsg</code></td><td><code dir="auto">inbox</code>, <code dir="auto">statusBar</code></td><td>read on the op’s terms</td></tr><tr><td><code dir="auto">achievement</code> / <code dir="auto">achievementGlobal</code></td><td><code dir="auto">log</code></td><td>decorative; the shipped <code dir="auto">achievements.hjson</code> has 125 <code dir="auto">globalText</code> entries</td></tr><tr><td><code dir="auto">sysopPage</code></td><td><em>(none)</em></td><td><code dir="auto">pendingPages</code> and the node-list indicator already show it</td></tr><tr><td><code dir="auto">timeWarning</code></td><td><em>(none)</em></td><td>sysops are typically unlimited</td></tr><tr><td><code dir="auto">system</code> / untagged</td><td><code dir="auto">interrupt</code></td><td>anything unforeseen behaves exactly as before</td></tr></tbody></table>
+<p>An untagged item is <code dir="auto">system</code> and therefore still interrupts, so nothing a third-party module queues can be silently swallowed. Override any of it per install with a <code dir="auto">notifications</code> block on the menu.</p>
+<p><kbd>M</kbd> opens a message viewer (<kbd>R</kbd> reply, <kbd>D</kbd>/<kbd>DEL</kbd> dismiss), and <kbd>S</kbd> sends to the node highlighted in the node list — #438’s “select a node and send”. Both go to a new <code dir="auto">wfcNodeMessage</code> menu rather than the <code dir="auto">nodeMessage</code> users reach with <code dir="auto">msg</code>: the same module and art, but its own entry, so the sysop path can be rethemed without changing what callers see. The inbox hangs off the connection rather than the module instance, because leaving the WFC destroys and rebuilds that instance — an inbox on it would lose anything unread the moment the op stepped away.</p>
+<p>Earning an achievement produced <strong>no</strong> <code dir="auto">Log</code> call anywhere, so it was invisible in the rotating log and both WFC log views. It is logged now, which is what makes the <code dir="auto">log</code> sink mean anything.</p>
+<p>An existing board keeps the menus it has, so see <a href="/admin/upgrade-notes/">UPGRADE.md</a> for the keys and menu entry to add.</p>
+<p>See <a href="https://enigma-bbs.github.io/modules/wfc/">WFC</a>.</p>
+</li>
+<li>
+<p><strong>Four bugs behind “the WFC gets corrupted when another node earns an achievement”</strong> — the framing turned out to be wrong: an achievement arriving while an +op sits at the WFC writes <strong>zero</strong> bytes at the time. The corruption came from four separate defects, each now with a targeted test.</p>
+<ul>
+<li><strong>The WFC leaked its <code dir="auto">ClientDisconnected</code> listener.</strong> <code dir="auto">enter()</code> registered a bound function and <code dir="auto">leave()</code> removed a <em>freshly</em> bound one, which never matches — one listener per visit. Since <code dir="auto">View.destroy()</code> is a no-op, those stale instances kept running their refresh and painting the node list, quick log and stat views over whatever menu the op had since moved to. Reproducible on an unrelated telnet client dropping.</li>
+<li><strong>The interrupt queue was flushed while the outgoing menu was still live</strong>, so a refresh timer was still repainting over the interrupt art and the key that dismissed it also reached the departing menu’s action keys — where <kbd>K</kbd> opens the kick-node confirm.</li>
+<li><strong>The queue was LIFO</strong>, so a run of node messages was read newest-first.</li>
+<li><strong>Two +ops collided over the quick log.</strong> Each WFC instance added a bunyan stream under the same name, and <code dir="auto">leave()</code> removed streams <em>by</em> that name — so the first op to leave silently and permanently froze the other’s quick log, with nothing on screen to say so.</li>
+</ul>
+<p><code dir="auto">sysop_chat</code> had the second of those in its own exit path and now holds interrupts for the destination menu instead.</p>
+</li>
+<li>
+<p><strong>Queued interrupts are drained on arrival only</strong> — the queue was drained at four sites: once on arrival, and three times on <em>departure</em>, in <code dir="auto">prevMenu()</code>, <code dir="auto">nextMenu()</code> and <code dir="auto">autoNextMenu()</code>. The departure drains are the defect above, and they ran before the outgoing menu’s <code dir="auto">leave()</code>, so its form was still bound to key presses while the interrupt waited for one.</p>
+<p>Draining now happens only on arrival, where the destination owns the screen and nothing is attached. This is <strong>more</strong> coverage than before, not less: 29 modules override <code dir="auto">initSequence()</code> without draining, so a queued item was never shown while inside any of them; the drain moved to <code dir="auto">enter()</code>, which only four modules override and all four call <code dir="auto">super</code>. A module that must not be interrupted while arriving overrides <code dir="auto">displayQueuedInterruptions()</code> or sets <code dir="auto">interrupt: never</code>.</p>
+</li>
+<li>
+<p><strong>A WFC activity ticker</strong> — add a <code dir="auto">%TK6</code> ticker to the WFC art and it becomes a board activity marquee, fed from the same nine system events that already drive each user’s log: if it is worth writing to a user’s log it is worth putting on the marquee. <code dir="auto">userLogin</code>, <code dir="auto">userAchievementEarned</code> and <code dir="auto">userUpload</code> have default formats and the rest are opt-in, since an event with no format string is not shown. <code dir="auto">ticker.rotateOn</code> takes <code dir="auto">"cycle"</code> or a number of milliseconds, and <code dir="auto">ticker.idleText</code> covers a dry feed so the row is never blank. Routing a notification type to the <code dir="auto">ticker</code> sink puts it on the marquee too.</p>
+<p><code dir="auto">TickerView</code> gained a <strong><code dir="auto">cycle complete</code></strong> event for this, emitted at each motion’s natural boundary — when a scroll offset wraps, when a hold phase ends, when a bounce completes its round trip. A feed that swaps text on that event never cuts a message off mid-word, which a plain timer would. Useful to anything driving a ticker, not only the WFC.</p>
+</li>
+<li>
+<p><strong><code dir="auto">opVisibility</code> accepts the booleans it was always documented as taking</strong> — <code dir="auto">wfc.md</code> has described a boolean since the option existed while the code matched only <code dir="auto">'hidden'</code> and <code dir="auto">'visible'</code>, so <code dir="auto">opVisibility: false</code> fell through the switch and did nothing. That is the form people wrote. It matters because an invisible +op is excluded from <code dir="auto">getActiveConnections({visibleOnly: true})</code> and therefore receives no broadcast notifications at all. Strings stay canonical; <strong>this changes behaviour on an existing board</strong>, so see <a href="/admin/upgrade-notes/">UPGRADE.md</a>.</p>
 </li>
 <li>
 <p><strong>TIC-announced files were lost whenever the file arrived after its announcement</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/735">#735</a>) — a <code dir="auto">.tic</code> control file and the file it announces routinely arrive in <em>separate</em> mailer sessions; a peer running HTick was observed announcing a full Zone 1 nodelist 15–20 minutes ahead of the payload. ENiGMA½ processed the <code dir="auto">.tic</code> the moment it landed, could not find the file, archived the announcement to <code dir="auto">reject/</code> and unlinked it. The file then arrived with nothing left to pair it with and sat in the secure inbound indefinitely. For that peer and that file it failed every single time, and recovery meant finding the orphan by hand and forcing a rescan.</p>
@@ -214,6 +283,24 @@
 <ul>
 <li><strong>A system carrying file echoes and no message areas can now import at all.</strong> The import pass was gated on having <code dir="auto">messageNetworks.ftn.areas</code> configured, which TIC processing has nothing to do with — so a file-echo-only system logged “EchoMail export disabled” and then silently did nothing with every file its uplink sent. That configuration was barely reachable before this feature existed; it is the obvious one to try now.</li>
 </ul>
+</li>
+<li>
+<p><strong>Hatching — you can put your own file into an echo you carry</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/751">#751</a>) — forwarding passes on a file an uplink sent you; hatching originates one. A hub that cannot hatch cannot ship its own nodelist or infopack — it can only repeat what it is told.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">oputil.js fb hatch &#x3C;areaTag> &#x3C;file> [--desc ...] [--replaces ...]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="oputil.js fb hatch <areaTag> <file> [--desc ...] [--replaces ...]"><div></div></button></div></figure></div>
+<p>The area tag is the FTN one, a <code dir="auto">ticAreas</code> key, because that is what an operator configuring a hatch is looking at and one local area may carry several echoes. Deliberately thin: the per-downlink TIC generation, the loop guard, the unique 8.3 naming, the payload-then-TIC append and the <code dir="auto">Replaces</code> dequeue are all reached through the same code a forward uses, now shared rather than duplicated. A <code dir="auto">ticAreas</code> entry may carry an <code dir="auto">areaDesc</code>, written as FTS-5006 <code dir="auto">Areadesc</code> into TICs you hatch; a forwarded TIC carries whatever the hatching system wrote, untouched.</p>
+<p>See <a href="https://enigma-bbs.github.io/admin/oputil/">oputil</a> and <a href="https://enigma-bbs.github.io/filebase/tic-support/">TIC Support</a>.</p>
+</li>
+<li>
+<p><strong>Passthrough file areas — carry an echo without storing it</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/753">#753</a>) — a hub may carry an echo purely for its downlinks, with no interest in keeping the files. <code dir="auto">store()</code> required a local file base area and hard-failed without one, so a hub had to keep an area per echo for files its own users would never browse.</p>
+<p>Set <code dir="auto">passthrough: true</code> on the <code dir="auto">ticAreas</code> entry and the file is held in a transit directory only as long as a downlink still references it, then swept. It is <strong>required explicitly and never inferred</strong> from a missing <code dir="auto">areaTag</code>: a <code dir="auto">ticAreas</code> key is matched against <code dir="auto">fileBase.areas</code> too, so an entry without one may well be a working stored area that inference would quietly turn into a deleting one.</p>
+</li>
+<li>
+<p><strong>An echo carried on more than one network addresses each downlink correctly</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/757">#757</a>) — TIC forwarding took the network from the <em>first</em> downlink’s zone and then signed every downlink with it. A hub with several AKAs, or an area carried on two networks, therefore presented the wrong identity to some of its links.</p>
+<p>Each downlink is now addressed from our closest AKA by zone and net, with <code dir="auto">nodes.&#x3C;addr>.tic.network</code> and then the area’s <code dir="auto">network</code> as overrides. <code dir="auto">Seenby</code> lists every AKA in play rather than only one, because a peer matches it against the address <em>it</em> knows us by — a <code dir="auto">Seenby</code> naming one address lets a system that knows us by another forward the file straight back.</p>
+<p>The outbound <em>directory</em> deliberately stays the area’s and is not tied to that choice: the per-node <code dir="auto">.bsy</code> lock is derived from the address by zone, and a flow file written where the lock resolver does not expect it means the tosser and a live BinkP session take <em>different</em> locks — which is the whole exclusion <a href="http://ftsc.org/docs/fts-5005.003">FTS-5005</a> exists to provide. Nothing is lost, since an outbound session presents every one of our addresses in the handshake anyway.</p>
+</li>
+<li>
+<p><strong>A forwarded file and the TIC announcing it are now pruned together</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/862">#862</a>) — the two are queued in one append, adjacent and in that order, so removing one must remove the other. The tosser’s <code dir="auto">scrubFlowFileRefs()</code> knew that; the BinkP side’s prune path did not. Pruning a missing payload therefore left its TIC queued, and downlinks were handed TICs announcing files they would never receive. The companion rule now lives in one shared place used by both.</p>
 </li>
 <li>
 <p><strong>Outbound could be dropped on the floor while a mail session was running</strong> — ENiGMA½ appended reference records to BSO flow files without taking the flow file’s <code dir="auto">.bsy</code> lock, while the BinkP side rewrites those same files as entries are sent: it reads the whole file, marks a line done, and writes it back. An append landing between that read and that write was <strong>silently discarded</strong>. No error, no log — the queued file simply never shipped, and with nothing left referencing it, its packet sat in the outbound indefinitely. The busier the system, the more often it happened.</p>
@@ -347,6 +434,11 @@
 </li>
 <li>
 <p><strong>Multi-network BSO outbound fix</strong> — <code dir="auto">ftn_bso</code> (the scanner/tosser) and the native BinkP mailer used two independent rules to decide which FTN network owns the bare <code dir="auto">outbound/</code> spool directory. With two or more networks configured and no explicit <code dir="auto">scannerTossers.ftn_bso.defaultNetwork</code>, the two disagreed: outbound NetMail and EchoMail for the first-listed network was written to <code dir="auto">mail/ftn_out/&#x3C;network>/</code> but looked for in <code dir="auto">mail/ftn_out/outbound/</code>, so it was never sent — and never logged an error. Both sides now share a single resolver (<code dir="auto">defaultNetwork</code> when set, otherwise the first listed network), network names are matched case-insensitively, and mail already queued under the previous layout is picked up and sent automatically. See <a href="/admin/upgrade-notes/">UPGRADE.md</a> for details.</p>
+</li>
+<li>
+<p><strong>A file could not be found by its own name</strong> — <code dir="auto">FileEntry.findFiles()</code> and the message base ran query <em>values</em> through a <code dir="auto">sanitizeString()</code> that escapes MySQL style: doubling <code dir="auto">"</code> and backslash-escaping <code dir="auto">\</code>, <code dir="auto">%</code> and the control characters. SQLite’s only string-literal escape is a doubled quote, so all of that arrived as <strong>extra characters</strong> and a value could not match itself. A file named <code dir="auto">100% Pure.zip</code> or <code dir="auto">back\slash.zip</code> was simply not findable.</p>
+<p>Never an injection — the one escape that mattered was correct — but wrong, so values are now bound parameters rather than interpolated into the statement. The one interpolation that remains, a sort column, is checked against an allow-list, since a column name cannot be a bound parameter.</p>
+<p>A wildcard <code dir="auto">Replaces</code> was the same bug with teeth (<a href="https://github.com/NuSkooler/enigma-bbs/issues/864">#864</a>): a TIC’s <code dir="auto">Replaces</code> is a DOS glob matched against the stored short file name, and the conversion turned <code dir="auto">*</code> into <code dir="auto">%</code> before handing the result to the escaper — so every wildcard came back out as the literal two characters <code dir="auto">\%</code>, and with no <code dir="auto">ESCAPE</code> clause SQLite read that backslash literally. <code dir="auto">Replaces NODELIST.*</code> therefore matched nothing, <code dir="auto">tic.allowReplace</code> stored a <strong>second copy</strong> instead of superseding, and the old file stayed live in the base and queued for every downlink that had not collected it. An exact <code dir="auto">Replaces NODELIST.246</code> worked, and so did <code dir="auto">NODELIST.2?6</code>, which is what made it so quiet.</p>
 </li>
 </ul>
 <div class="sl-heading-wrapper level-h2"><h2 id="050-beta">0.5.0-beta</h2><a class="sl-anchor-link" href="#050-beta"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “0.5.0-beta”</span></a></div>
