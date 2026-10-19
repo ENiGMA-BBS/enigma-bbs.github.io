@@ -117,6 +117,10 @@
 </ul>
 </li>
 <li>
+<p><strong>REST API refresh cookie path changed to <code dir="auto">/auth</code>.</strong> Login and successful refresh expire the old cookie scoped to <code dir="auto">/auth/refresh</code> and issue one that reaches both refresh and logout. Existing browser sessions must refresh once or log in again before logout can revoke their refresh token. Logout also clears the old cookie if it is still stored, but cannot revoke a token that the browser does not send. Client cookie jars must accept all <code dir="auto">Set-Cookie</code> headers in the response. Access tokens already issued remain valid for their normal 15-minute lifetime.</p>
+<p><strong>Action:</strong> browser clients with existing sessions must refresh once or log in again before logging out. Non-browser clients must process every <code dir="auto">Set-Cookie</code> header from login, refresh and logout.</p>
+</li>
+<li>
 <p><strong>A door’s <code dir="auto">io: socket</code> server now listens on loopback only</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/885">#885</a>). The temporary TCP server an <code dir="auto">abracadabra</code> door connects back to used to be bound to every interface, and the first connection to arrive — from anywhere — was handed the caller’s session. It now binds <code dir="auto">127.0.0.1</code>.</p>
 <p><strong>Action:</strong> none if the door, launch script or emulator already connects to <code dir="auto">localhost</code> or <code dir="auto">127.0.0.1</code> on the same machine, which covers the shipped examples, bivrost! and the documented QEMU and DOSEMU setups. Two cases need a change:</p>
 <ul>
