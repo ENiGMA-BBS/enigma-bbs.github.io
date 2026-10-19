@@ -83,6 +83,9 @@
 <li>
 <p><strong>Upgrading:</strong> run <code dir="auto">npm install</code> to pick up the new <code dir="auto">enigma-vamiga</code> dependency (the emulator core as WebAssembly, about 9 MB). No configuration changes are required; <code dir="auto">doors.amiga.snapshotCacheEntries</code> (default 4) is the only new system setting.</p>
 </li>
+<li>
+<p><strong>Shim 1.5:</strong> the shim (axshim 1.5) now holds a caller’s keys until the door reads them instead of dropping the end of a long paste, drives RTS, and takes the line rate from the door’s <code dir="auto">baud</code> setting. A door image keeps the shim it was built with: refresh an existing one by rebuilding it with <code dir="auto">make_image.sh</code>, or replace just the shim with <code dir="auto">./oputil.js amiga-door add IMAGE misc/amiga_door/bin/axshim C/axshim</code>.</p>
+</li>
 </ul>
 </li>
 </ul>
