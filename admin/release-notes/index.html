@@ -86,6 +86,9 @@
 <li>
 <p><strong>MRC smilies stay as text for RIPscrip callers.</strong> MRC chat can show <code dir="auto">:)</code> and <code dir="auto">:D</code> as the CP437 smiley glyphs, which are bytes a RIPscrip terminal reads as the start of a command. A caller whose terminal was detected as RIPscrip now sees them as typed, whatever <code dir="auto">SHOWSMILIES</code> is set to. Other callers are unaffected.</p>
 </li>
+<li>
+<p><strong>RIP starter menus.</strong> Three RIP button screens for RIP callers (login matrix; a main menu with messages, who’s online, last callers and goodbye; a message menu with list, post, change area and new scan), in front of the board’s own ANSI menus, theme and art, which come back to them. Each button sends one letter, which typing does too. <code dir="auto">oputil.js config new</code> offers them after the PETSCII and ATASCII questions, defaulting to no; on yes it adds the menu file, a <code dir="auto">TE[rip]</code> branch on the connect menu and the art (generated <code dir="auto">.rip</code> screens, each with an <code dir="auto">.ans</code> of the same name) in the general art directory. No theme, no new setting; existing boards are not changed. See <a href="/servers/loginservers/rip/#starter-menus">Starter menus</a>.</p>
+</li>
 </ul>
 </li>
 <li>
