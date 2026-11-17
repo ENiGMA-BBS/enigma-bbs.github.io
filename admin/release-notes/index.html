@@ -92,6 +92,15 @@
 <li>
 <p>A UI string that starts with an MCI code whose value is empty (<code dir="auto">|LO</code> for a user with no location) shows nothing for it, instead of the raw code, and a cursor-forward with no count (<code dir="auto">ESC[C</code>) measures one column.</p>
 </li>
+<li>
+<p><strong>Typing colour codes in a single-line field stays inside the field.</strong> While a code you just typed is shown as <code dir="auto">|07</code>, it now takes its three columns: the field’s fill no longer runs three cells past its right edge, the cursor sits after the code rather than on it, and a line near the field’s width scrolls instead of spilling over. A scrolled field shows its full width of text; before, each colour code in view hid a character at the right edge. This is sysop chat’s input line: it is the edit field that previews colour this way (a theme cannot give an edit field an <code dir="auto">itemFormat</code>).</p>
+</li>
+<li>
+<p><strong>Sysop chat input with wide characters.</strong> The input line is measured in screen columns, so the cursor stays with the text when it holds CJK or other double-width characters, and a long line no longer pushes the prefix off its left end on a redraw. A <code dir="auto">prefixFormat</code> that draws a literal pipe (<code dir="auto">||</code>) is measured as drawn, so the cursor is no longer one column short, and with no <code dir="auto">prefixFormat</code> at all a scrolled line holding colour codes shows the right part of the text.</p>
+</li>
+<li>
+<p><strong>A button’s <code dir="auto">itemFormat</code> draws its text as it is.</strong> A button (<code dir="auto">%BT</code>) with an <code dir="auto">itemFormat</code> or <code dir="auto">focusItemFormat</code> rendered its (already rendered) text a second time, so a literal pipe in it could turn into a colour: a button labelled <code dir="auto">a||07b</code> showed <code dir="auto">a</code> and <code dir="auto">b</code> in another colour instead of <code dir="auto">a|07b</code>. The text now shows as it does without the format; the format’s own codes still render. The same fix covers sysop chat’s input line, whose redraw showed a typed <code dir="auto">||</code>, or a <code dir="auto">||</code> in its prefix, as one <code dir="auto">|</code>. See <a href="/admin/upgrade-notes/">UPGRADE</a>.</p>
+</li>
 </ul>
 </li>
 <li>
