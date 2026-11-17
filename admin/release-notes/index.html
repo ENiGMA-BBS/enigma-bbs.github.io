@@ -75,6 +75,26 @@
 <div class="sl-heading-wrapper level-h2"><h2 id="060-beta">0.6.0-beta</h2><a class="sl-anchor-link" href="#060-beta"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “0.6.0-beta”</span></a></div>
 <ul>
 <li>
+<p><strong>Pipe codes are measured the way they are drawn</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1022">#1022</a>). One tokenizer now renders, measures, cuts and strips pipe codes, so text pads, centres and truncates to the columns it takes on screen. Before, <code dir="auto">a || b</code> was padded as if it were six columns wide, <code dir="auto">|CF05</code> as two and an unknown <code dir="auto">|ZZ</code> (shown as typed) as none; the WFC task screen, which shows task output with its pipes escaped, padded short and wrapped early. Status bar panels set to <code dir="auto">clip-left</code> and focused text fields that scroll now show the right part of a coloured value, cut by columns (wide characters included). Colours look exactly as before. See <a href="/art/colour-codes/">Colour Codes</a>.</p>
+<ul>
+<li>
+<p><strong>Views measure what they draw.</strong> Text views, menus and status bar panels pad and cut by the columns their text takes after rendering, so a pipe that is left over (<code dir="auto">||07</code> shows <code dir="auto">|07</code>, a code an edit field shows as typed) counts, and menu item positions and column widths no longer count colour escapes as characters.</p>
+</li>
+<li>
+<p><strong>Message bodies:</strong> <code dir="auto">|1A</code>-style text shows as typed (it was colour 1, with the letter eaten), and <code dir="auto">|CF05</code>, <code dir="auto">|CB03</code>, <code dir="auto">|CU01</code> and <code dir="auto">|CD02</code> move the cursor by the full count in ANSI messages (they moved one column and printed the digits). <code dir="auto">||05</code> is still a pipe and colour 05, as on Renegade, Synchronet and Mystic.</p>
+</li>
+<li>
+<p><strong>Exports drop the codes a message draws, and only those.</strong> E-mail, the full screen editor’s export and the REST API now strip pipe codes the way NNTP, Gopher and ActivityPub do (the REST API used to strip only ANSI). A colour code or a known MCI code is removed; an unknown <code dir="auto">|ZZ</code> is shown as typed, so it now stays; <code dir="auto">|CF05</code> becomes five spaces, never more than the code is long, so an export is never longer than its input.</p>
+</li>
+<li>
+<p><strong>Text styles change the text, not the codes in it.</strong> <code dir="auto">textStyle: upper</code> turned an ANSI colour into a “delete lines” sequence, and <code dir="auto">lower</code> turned <code dir="auto">|UN</code> into text; only the text is styled now.</p>
+</li>
+<li>
+<p>A UI string that starts with an MCI code whose value is empty (<code dir="auto">|LO</code> for a user with no location) shows nothing for it, instead of the raw code, and a cursor-forward with no count (<code dir="auto">ESC[C</code>) measures one column.</p>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>Stricter flow file path handling.</strong> A flow file line’s <code dir="auto">^</code>, <code dir="auto">-</code> or <code dir="auto">#</code> (delete or truncate after sending) is now carried out only for a file inside the mail directories: the outbound directories, inbound, secure inbound, TIC transit, and any listed in the new <code dir="auto">scannerTossers.ftn_bso.binkp.flowDispositionRoots</code>. A file elsewhere is sent and left in place, with a warning. A <code dir="auto">#</code> line never truncates through a symlink. A flow file entry (or direct-attach netmail file) naming a file in ENiGMA½’s configuration, security, database or log directories is never sent. Finding a moved packet by name beside its flow file now applies only to packets, bundles and TICs queued for deletion from an outbound directory, never to a BSO control file; other entries in that situation are reported, not sent and not pruned. ENiGMA½ also refuses to write a flow file line that other mailers could read differently (a relative path, a control character, leading or trailing whitespace, a leading directive character, or more than 2047 bytes). <code dir="auto">oputil bso list</code> marks entries <code dir="auto">REFUSED</code>, <code dir="auto">KEPT</code> or <code dir="auto">MISFILED</code> accordingly. See <a href="/admin/upgrade-notes/">UPGRADE</a> and <a href="/messageareas/binkp/#binkpflowdispositionroots"><code dir="auto">flowDispositionRoots</code></a>.</p>
 </li>
 <li>
