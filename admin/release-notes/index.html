@@ -89,6 +89,9 @@
 <p><strong>Sysop chat status fields now show the partner’s name and elapsed time separately</strong> in the <code dir="auto">luciano_blocktronics</code> theme. The duration field had reused the partner field’s ID, and the formats were attached to the views instead of the chat configuration (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1058">#1058</a>).</p>
 </li>
 <li>
+<p><strong><code dir="auto">binkp.pullSchedule: null</code> is no longer reported as a config error</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1041">#1041</a>). The BinkP docs say <code dir="auto">null</code> turns the pull cycle off, and it always did, but config validation (at startup and in <code dir="auto">oputil config validate</code>) flagged it as a type mismatch. <code dir="auto">null</code> and <code dir="auto">""</code> both validate now. The docs also said leaving the key out turns the cycle off; it does not (the default, <code dir="auto">"every 15 minutes"</code>, applies), and the docs now say so.</p>
+</li>
+<li>
 <p><strong>Pipe codes are measured the way they are drawn</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1022">#1022</a>). One tokenizer now renders, measures, cuts and strips pipe codes, so text pads, centres and truncates to the columns it takes on screen. Before, <code dir="auto">a || b</code> was padded as if it were six columns wide, <code dir="auto">|CF05</code> as two and an unknown <code dir="auto">|ZZ</code> (shown as typed) as none; the WFC task screen, which shows task output with its pipes escaped, padded short and wrapped early. Status bar panels set to <code dir="auto">clip-left</code> and focused text fields that scroll now show the right part of a coloured value, cut by columns (wide characters included). Colours look exactly as before. See <a href="/art/colour-codes/">Colour Codes</a>.</p>
 <ul>
 <li>
