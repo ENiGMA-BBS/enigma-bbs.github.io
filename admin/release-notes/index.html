@@ -101,6 +101,12 @@
 <li>
 <p><strong>A button’s <code dir="auto">itemFormat</code> draws its text as it is.</strong> A button (<code dir="auto">%BT</code>) with an <code dir="auto">itemFormat</code> or <code dir="auto">focusItemFormat</code> rendered its (already rendered) text a second time, so a literal pipe in it could turn into a colour: a button labelled <code dir="auto">a||07b</code> showed <code dir="auto">a</code> and <code dir="auto">b</code> in another colour instead of <code dir="auto">a|07b</code>. The text now shows as it does without the format; the format’s own codes still render. The same fix covers sysop chat’s input line, whose redraw showed a typed <code dir="auto">||</code>, or a <code dir="auto">||</code> in its prefix, as one <code dir="auto">|</code>. See <a href="/admin/upgrade-notes/">UPGRADE</a>.</p>
 </li>
+<li>
+<p><strong>Ticker colours and cursor codes.</strong> Ticker text whose only colour code comes first (<code dir="auto">|04Hello</code>) now scrolls in that colour; before, it took the view’s colour unless the colour changed again later in the text. A cursor-forward code (<code dir="auto">|CF05</code>) now scrolls as that many spaces, and the other cursor codes (<code dir="auto">|CB##</code>, <code dir="auto">|CU##</code>, <code dir="auto">|CD##</code>) are left out; before, they scrolled through the window in pieces, as a stray escape and visible <code dir="auto">[5C</code>. A ticker scrolling left or right keeps its colours as the text wraps round; the copy coming in from the edge used to show in the view’s colour, and the colours were off while the gap was in view. A text style effect (<code dir="auto">lower</code>, <code dir="auto">title</code>, …) no longer treats a literal pipe (<code dir="auto">||</code>) as the start of a code. This includes the WFC activity ticker.</p>
+</li>
+<li>
+<p><strong>MRC <code dir="auto">/rainbow</code> no longer cuts a colour code in half.</strong> A long <code dir="auto">/rainbow</code> line is still cut at 140 characters, but never inside a colour code, so the last word no longer ends in a stray <code dir="auto">|0</code> on every other board. Room, user and site names sent through the MRC multiplexer have every code removed, including one that removing another code would form.</p>
+</li>
 </ul>
 </li>
 <li>
