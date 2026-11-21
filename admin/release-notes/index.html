@@ -112,6 +112,15 @@
 <li><strong>For mods:</strong> <code dir="auto">promptForInput({ prevFormName })</code> covers the previous form instead of tearing it down: its views and timers are kept, and its view listeners are removed, as before. Mods that extend the full screen editor: see UPGRADE.md.</li>
 </ul>
 </li>
+<li>
+<p><strong>Tickers and status bars keep running on screens that switch pages.</strong> On onelinerz, rumorz and the BBS list (the list and the add page), the file list (browse and details) and the ActivityPub search, actor search and user configuration screens, a <code dir="auto">%TK</code> ticker or a <code dir="auto">%SB</code> status bar with <code dir="auto">refreshInterval</code> stopped for good the first time the screen switched to its other page. The page not shown now only pauses them, and they pick up again when it is shown.</p>
+<ul>
+<li><strong>Onelinerz and rumorz: the entry preview no longer draws over the list.</strong> Typing a line and then pressing Escape within half a second drew the preview and the entry field over the list, and left the cursor in the hidden field. It also fired after leaving the menu. A pending preview is now dropped when the add page goes away.</li>
+<li><strong>Leaving one of these screens while a page is still loading</strong> (its art being drawn, a remote look-up) no longer draws the rest of a page shown before over the next menu, and the file list no longer jumps to its “no results” menu after the caller has gone elsewhere. A page shown for the first time can still draw its views once its art finishes, as before.</li>
+<li><strong>The file list’s “general” details section</strong> no longer stays attached under the browse page after leaving details.</li>
+<li><strong>For mods:</strong> these modules cover the hidden page (<code dir="auto">cover()</code>) instead of tearing it down with <code dir="auto">setFocus(false)</code>. See UPGRADE.md if you extend one of them.</li>
+</ul>
+</li>
 </ul>
 <div class="sl-heading-wrapper level-h2"><h2 id="061-beta">0.6.1-beta</h2><a class="sl-anchor-link" href="#061-beta"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “0.6.1-beta”</span></a></div>
 <ul>
