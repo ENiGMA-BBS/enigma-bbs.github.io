@@ -81,6 +81,12 @@
 </ul>
 </li>
 <li>
+<p><strong>Animated focused items in menu lists (<code dir="auto">focusItemFrames</code>).</strong> Vertical, horizontal, full and spinner menus can play a list of formats on the focused item: an arrow that pulses beside the selection, brackets that bounce around it, a highlight that glints every few seconds. Each frame is a format used as <code dir="auto">focusItemFormat</code> is (for plain lists of strings too); <code dir="auto">focusItemFrameInterval</code>, <code dir="auto">focusItemFrameDurations</code> and <code dir="auto">focusItemFrameMode</code> (<code dir="auto">loop</code> or <code dir="auto">pingpong</code>) set the timing. Only the focused item moves and only while its list has focus, moving the selection draws the new item’s first frame at once, and each frame sends just that one item. Horizontal menu slots and full menu columns make room for the widest frame. When it is not animated (the list is not focused, animations are off, or the session is not plain ANSI) the item shows <code dir="auto">focusItemFormat</code>, or the first frame. The same switches as <code dir="auto">%AV</code> turn it off. Stock menus do not use it yet; the templates show a commented-out example. See <a href="/art/views/views/#animated-focused-item">Animated Focused Item</a>.</p>
+</li>
+<li>
+<p><strong>A full menu (<code dir="auto">%FM</code>) no longer goes blank when the focus moves off its last item.</strong> With the last item focused, moving to another view on the screen (Tab, or Enter on a list that does not submit) redrew the full menu as nothing, and it stayed blank: the arrow keys drew nothing (Down did not move at all) until Up had blindly wrapped the focus round, or the menu was reloaded. On a full menu with several pages, an item on a later page could also come back drawn on the wrong page after a focus change. The page with the focused item is now drawn.</p>
+</li>
+<li>
 <p><strong>UTF-8 art with certain box-drawing or accented characters no longer breaks lines.</strong> Characters such as <code dir="auto">č</code>, <code dir="auto">Ċ</code>, <code dir="auto">┊</code> and <code dir="auto">┍</code> in UTF-8 art were taken as a carriage return or line feed (their low byte is one), so the line was cut there and the rest drawn in the wrong place. They are now drawn as the characters they are. CP437 art is not affected.</p>
 </li>
 <li>
