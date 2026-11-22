@@ -118,6 +118,18 @@
 <p><strong>What changes by itself:</strong> the page not shown is covered (<code dir="auto">cover()</code>) instead of torn down with <code dir="auto">setFocus(false)</code> (<code dir="auto">detachClientEvents()</code> for the file list’s details), and activated when it is shown again. Its tickers and status bars pause instead of stopping, and listeners added to its views are still there when it is shown again.</p>
 <p><strong>Action:</strong> a module that extends one of them and adds listeners to a page’s views each time the page is shown should remove them first (<code dir="auto">removeListener()</code>, then <code dir="auto">on()</code>), or add them once; otherwise they fire once more after every visit.</p>
 </li>
+<li>
+<p><strong>Sysops and theme authors: new warnings about <code dir="auto">mci</code> keys.</strong> Nothing needs to change: every key applies exactly as it did before.</p>
+<p><strong>What you may see in the log:</strong> warnings naming the menu (<code dir="auto">menuName</code>), form (<code dir="auto">formId</code>, or <code dir="auto">promptName</code> for a prompt) and key (<code dir="auto">mci</code>):</p>
+<ul>
+<li><code dir="auto">MCI key "ET8" configures view 8, which is a %ME; applying it anyway</code>: the key’s code is not the code in the art. Views are matched by ID, so it still applies. Rename the key to the art’s code (<code dir="auto">ME8</code>).</li>
+<li><code dir="auto">MCI key "MET3" is not a code and view ID alone; read as "ET3"</code>: rename the key to what the art has (<code dir="auto">ME3</code>). Copies of the stock <code dir="auto">new_user</code> menus made from earlier templates have <code dir="auto">MET3</code>.</li>
+<li><code dir="auto">MCI "position" ignored: the art already has this view ID for another code</code>: a placed view’s ID is taken in the art. Pick a free, high ID.</li>
+</ul>
+<p>These warnings are logged each time the form is loaded (each visit to the screen), not once at startup.</p>
+<p>The stock templates and the luciano_blocktronics theme have been fixed (<code dir="auto">MET3</code> to <code dir="auto">ME3</code>, and a few theme keys such as <code dir="auto">ET8</code>/<code dir="auto">ET9</code> to <code dir="auto">ME8</code>/<code dir="auto">SM9</code> on the user config screen). Your own copies of menus made from older templates are not changed; fix them when convenient.</p>
+<p><strong>New, opt-in:</strong> <code dir="auto">position</code> in an <code dir="auto">mci</code> block places a view (see <a href="/art/mci/#placing-views-from-configuration">Placing Views from Configuration</a>). It does nothing unless you add it.</p>
+</li>
 </ul>
 <div class="sl-heading-wrapper level-h3"><h3 id="060-beta-to-061-beta">0.6.0-beta to 0.6.1-beta</h3><a class="sl-anchor-link" href="#060-beta-to-061-beta"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “0.6.0-beta to 0.6.1-beta”</span></a></div>
 <ul>
