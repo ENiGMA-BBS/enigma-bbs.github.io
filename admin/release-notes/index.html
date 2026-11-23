@@ -75,6 +75,31 @@
 <div class="sl-heading-wrapper level-h2"><h2 id="062-beta">0.6.2-beta</h2><a class="sl-anchor-link" href="#062-beta"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “0.6.2-beta”</span></a></div>
 <ul>
 <li>
+<p><strong>Pre-auth feedback no longer opens with “Field cannot be empty” showing.</strong> The feedback editor reachable from the login matrix put the cursor on its empty From field and checked it at the same moment, as if the visitor had already left it, so the error was on screen before anything was typed. From is now checked only when the visitor moves on from it, and an empty From is still refused then.</p>
+</li>
+<li>
+<p><strong>Page sysop’s “send as mail” is addressed to the sysop by name.</strong> When the sysop could not be paged and the caller chose to send the page as mail, the To field said <code dir="auto">Sysop</code> unless <code dir="auto">sysopUserName</code> was set in the <code dir="auto">pageSysop</code> menu config. On a board with no account named Sysop, moving into To and pressing Enter gave “Failed to find user”, and the saved mail showed <code dir="auto">Sysop</code> as its recipient. With no <code dir="auto">sysopUserName</code> the To is now the root user’s username. A configured <code dir="auto">sysopUserName</code> is used as before, and the mail still goes to the root user either way.</p>
+</li>
+<li>
+<p><strong>Removing a file from the download queue shows the right list</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1160">#1160</a>). Removing any queued file but the last drew the removed file’s neighbour twice and dropped the last file from the list, until the screen was redrawn. The fix is in the code all menu lists share: after <code dir="auto">removeItem()</code> or a sort, every item is drawn again from its own text, so mods that remove entries from a visible list are fixed too.</p>
+</li>
+<li>
+<p><strong>Page sysop’s “send as mail” opens the editor filled in</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1144">#1144</a>). When no sysop was available and the caller chose to send their page as mail, the private mail editor opened empty: no To, no subject, and the page text they had typed was gone. It now opens addressed to the sysop, with the subject from <code dir="auto">mailSubject</code> and the page text as the body, and the cursor in the body, ready to add to or save.</p>
+<ul>
+<li><strong>The private mail editor no longer says “Field cannot be empty” as it opens.</strong> Starting any new private mail showed the error for the empty To field before anything was typed. To is now checked when the caller leaves it, as before.</li>
+</ul>
+</li>
+<li>
+<p><strong>A message area tag that is not configured is no longer open to everyone.</strong> The read and write checks treated a tag missing from <code dir="auto">messageConferences</code> as an area with no ACS of its own, so the defaults applied and any user passed: a caller whose current area had been removed from the config could still post into it, and an offline reply packet could still be imported into it. Such a tag is now no access, for read and write, for every user including sysops. Configured areas, private mail, bulletins and the ActivityPub shared area are checked exactly as before.</p>
+<ul>
+<li><strong>Callers whose current area was removed</strong> (or whose area’s conference was removed) are moved to a suitable area when they log in, the same way callers who can no longer read their current area always have been: the default conference and area when they can read them, else the first they can. Callers with no current area stored get one the same way, and so do callers whose stored conference no longer holds their area (an area the sysop moved to another conference). A caller whose current area is configured and readable is left alone. If an area is removed while a caller is online and in it, posting there shows the usual no-access message and its message list is empty until they pick another area or log in again.</li>
+<li><strong>My Messages and message search</strong> no longer list messages left in the message base under an area tag that is no longer configured.</li>
+<li><strong>An offline reply packet</strong> message for such an area is rejected and counted in the import summary.</li>
+<li><strong>Fixed: a login could stop after the password.</strong> When a caller was being moved out of an area they could not read and the default conference had no area they could read either, picking another area threw an error and the login never finished. This had been the case since April 2026.</li>
+<li><strong>Without a conference marked <code dir="auto">default</code>,</strong> new users were given the ActivityPub conference as their current one (the built-in conferences come first in the config), and callers being moved out at login with ActivityPub turned on landed there too. A conference shown in the conference list is now picked first; the hidden ActivityPub one only when nothing else is readable. Boards set up with <code dir="auto">oputil config new</code> mark a default conference and are not affected.</li>
+</ul>
+</li>
+<li>
 <p><strong>New <code dir="auto">%AV</code> animation view: frames played in a box over a menu’s art.</strong> Fire pillars beside a logo, an eye that glints every few seconds, a spinner next to the command prompt: the menu keeps taking input while they play, and only the cells that change are sent. Frames come from pipe-coded strings in the menu config, from one art file holding every frame (several animations can share one sheet), or from one art file per frame, found through the theme like any art, so themes and mods can supply their own. Place the box with an <code dir="auto">%AV20</code> marker in the art, or with a <code dir="auto">position</code> and no marker to animate existing art without editing it. Animations play on ANSI sessions only; PETSCII, ATASCII and RIP callers see the first frame. <code dir="auto">menus.animations.enabled: false</code> in <code dir="auto">config.hjson</code> turns them off everywhere, and <code dir="auto">animations: false</code> in a menu’s <code dir="auto">config</code> turns off that menu. Stock menus do not use it yet; the templates show a commented-out example. See <a href="/art/views/animation_view/">Animation View</a>.</p>
 <ul>
 <li><strong>For mods:</strong> a view may have a <code dir="auto">prepare(cb)</code> method, which the form calls before it is first drawn (<code dir="auto">AnimationView</code> loads its frames there). A form with no such view loads as before. See <a href="/art/views/views/#views-that-load-before-the-first-draw">Views that load before the first draw</a>.</li>
@@ -85,6 +110,19 @@
 </li>
 <li>
 <p><strong>A full menu (<code dir="auto">%FM</code>) no longer goes blank when the focus moves off its last item.</strong> With the last item focused, moving to another view on the screen (Tab, or Enter on a list that does not submit) redrew the full menu as nothing, and it stayed blank: the arrow keys drew nothing (Down did not move at all) until Up had blindly wrapped the focus round, or the menu was reloaded. On a full menu with several pages, an item on a later page could also come back drawn on the wrong page after a focus change. The page with the focused item is now drawn.</p>
+</li>
+<li>
+<p><strong>A sysop chat that cannot be set up now ends and says why in the log.</strong> If the chat art (<code dir="auto">SYSOPCHAT</code>) was missing, or lacked one of <code dir="auto">%MT1</code>, <code dir="auto">%ET2</code>, <code dir="auto">%MT3</code> or <code dir="auto">%ET4</code>, breaking into chat from the WFC left the sysop on the chat art unable to type, the caller was never brought in, and nothing useful was logged. The error is now logged with the menu name and the missing codes, and the chat ends as Escape would end it:</p>
+<ul>
+<li><strong>If the sysop’s side fails,</strong> the sysop goes back to the WFC. The caller, who has not seen the chat, is not told and stays where they are.</li>
+<li><strong>If the caller’s side fails,</strong> the sysop sees ”[ Chat session ended ]” and both go back.</li>
+<li><strong>If the caller cannot be taken to the chat at all</strong> (the menu will not load, no access, they hung up), the chat ends and the sysop goes back, with a warning in the log. Before, the sysop waited in an empty chat.</li>
+<li><strong>Pressing Escape during the two seconds</strong> after ”[ Chat session ended ]” no longer sends the sysop back a second menu as well.</li>
+</ul>
+<p>A chat that sets up works as before.</p>
+</li>
+<li>
+<p><strong>The node message screen finishes loading</strong> (<a href="https://github.com/NuSkooler/enigma-bbs/issues/1143">#1143</a>). When its art has a live preview (<code dir="auto">%TL3</code>, as the stock art does), the node message screen never finished loading. Nothing showed on a stock board, but a <code dir="auto">pause</code>, <code dir="auto">interrupt: realtime</code> or <code dir="auto">runtime.autoNext</code> set on a <code dir="auto">nodeMessage</code> menu never took effect. They now do. The preview still follows each key as it is typed.</p>
 </li>
 <li>
 <p><strong>UTF-8 art with certain box-drawing or accented characters no longer breaks lines.</strong> Characters such as <code dir="auto">č</code>, <code dir="auto">Ċ</code>, <code dir="auto">┊</code> and <code dir="auto">┍</code> in UTF-8 art were taken as a carriage return or line feed (their low byte is one), so the line was cut there and the rest drawn in the wrong place. They are now drawn as the characters they are. CP437 art is not affected.</p>
